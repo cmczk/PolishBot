@@ -8,7 +8,7 @@ public class Flashcard
     public string Translation { get; set; } = null!;
     public string Example { get; set; } = null!;
 
-    private Flashcard(string word, string explanation, string translation, string example)
+    public Flashcard(string word, string explanation, string translation, string example)
     {
         Word = word;
         Explanation = explanation;
