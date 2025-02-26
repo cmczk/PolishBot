@@ -7,9 +7,9 @@ public class Flashcard
 {
     public int Id { get; set; }
     public string Word { get; set; } = null!;
-    public string Explanation { get; set; } = null!;
+    public string? Explanation { get; set; }
     public string Translation { get; set; } = null!;
-    public string Example { get; set; } = null!;
+    public string? Example { get; set; }
 
     public Flashcard(string word, string explanation, string translation, string example)
     {

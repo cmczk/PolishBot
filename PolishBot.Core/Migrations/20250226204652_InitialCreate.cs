@@ -17,9 +17,9 @@ namespace PolishBot.Core.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Word = table.Column<string>(type: "TEXT", nullable: false),
-                    Explanation = table.Column<string>(type: "TEXT", nullable: false),
+                    Explanation = table.Column<string>(type: "TEXT", nullable: true),
                     Translation = table.Column<string>(type: "TEXT", nullable: false),
-                    Example = table.Column<string>(type: "TEXT", nullable: false)
+                    Example = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

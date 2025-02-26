@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PolishBot.Core.Migrations
 {
     [DbContext(typeof(PolishBotDbContext))]
-    [Migration("20250226141634_InitialCreate")]
+    [Migration("20250226204652_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,11 +25,9 @@ namespace PolishBot.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Example")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Explanation")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Translation")

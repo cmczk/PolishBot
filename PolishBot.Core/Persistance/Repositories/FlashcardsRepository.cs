@@ -3,7 +3,7 @@ using PolishBot.Core.Persistance.Models;
 
 namespace PolishBot.Core.Persistance.Repositories;
 
-public class FlashcardRepository(PolishBotDbContext context)
+public class FlashcardsRepository(PolishBotDbContext context)
 {
     private readonly PolishBotDbContext _context = context;
 

@@ -22,11 +22,9 @@ namespace PolishBot.Core.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Example")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Explanation")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Translation")
