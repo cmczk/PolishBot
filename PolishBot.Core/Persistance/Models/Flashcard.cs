@@ -1,5 +1,8 @@
-﻿namespace PolishBot.Core.Persistance.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace PolishBot.Core.Persistance.Models;
+
+[Table("flashcards")]
 public class Flashcard
 {
     public int Id { get; set; }

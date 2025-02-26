@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PolishBot.Core.Persistance.Configurations;
 using PolishBot.Core.Persistance.Models;
 
-public class PolishBotDbContext(DbContextOptions<PolishBotDbContext> options) : DbContext(options)
+public class PolishBotDbContext() : DbContext()
 {
     public DbSet<Flashcard> Flashcards { get; set; }
 

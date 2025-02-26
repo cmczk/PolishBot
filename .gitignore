@@ -485,3 +485,4 @@ $RECYCLE.BIN/
 
 # DB
 *.db
+/PolishBot.Core/polish_bot.db
