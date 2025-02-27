@@ -19,31 +19,33 @@ public static class MessageToFlashcardParser
             return false;
         }
 
-        flashcard = lines.Length switch
+        flashcard = lines switch
         {
-            2 => new Flashcard(
-                word: lines[0][Word.Length..], 
+            [var first, var second] => new Flashcard(
+                word: first[Word.Length..],
                 explanation: string.Empty,
-                translation: lines[1][Translation.Length..],
+                translation: second[Translation.Length..],
                 example: string.Empty),
-            
-            3 when lines[1].StartsWith(Explanation) => new Flashcard(
-                word: lines[0][Word.Length..],
-                explanation: lines[1][Explanation.Length..],
-                translation: lines[2][Translation.Length..],
+
+            [var first, var second, var third] when second.StartsWith(Explanation) => new Flashcard(
+                word: first[Word.Length..],
+                explanation: second[Explanation.Length..],
+                translation: third[Translation.Length..],
                 example: string.Empty),
-            
-            3 when lines[1].StartsWith(Translation) => new Flashcard(
-                word: lines[0][Word.Length..],
+
+            [var first, var second, var third] when second.StartsWith(Translation) => new Flashcard(
+                word: first[Word.Length..],
                 explanation: string.Empty,
-                translation: lines[1][Translation.Length..],
-                example: lines[2][Example.Length..]),
-            
-            _ => new Flashcard(
-                word: lines[0][Word.Length..],
-                explanation: lines[1][Explanation.Length..],
-                translation: lines[2][Translation.Length..],
-                example: lines[3][Example.Length..]),
+                translation: second[Translation.Length..],
+                example: third[Example.Length..]),
+
+            [var first, var second, var third, var fourth] => new Flashcard(
+                word: first[Word.Length..],
+                explanation: second[Explanation.Length..],
+                translation: third[Translation.Length..],
+                example: fourth[Example.Length..]),
+
+            _ => Flashcard.Default,
         };
 
         return true;
@@ -76,14 +78,23 @@ public static class MessageToFlashcardParser
 
     private static bool IsOrderValid(string[] lines)
     {
-        return lines.Length switch
+        return lines switch
         {
-            2 when lines[1].StartsWith(Translation) => true,
-            3 when lines[1].StartsWith(Explanation) && lines[2].StartsWith(Translation) => true,
-            3 when lines[1].StartsWith(Translation) && lines[2].StartsWith(Example) => true,
-            4 when lines[1].StartsWith(Explanation) 
-                   && lines[2].StartsWith(Translation)
-                   && lines[3].StartsWith(Example) => true,
+            [var first, var second] when second.StartsWith(Translation) => true,
+            
+            [var first, var second, var third] when
+                second.StartsWith(Explanation)
+                && third.StartsWith(Translation) => true,
+            
+            [var first, var second, var third] when
+                second.StartsWith(Translation)
+                && third.StartsWith(Example) => true,
+            
+            [var first, var second, var third, var fourth] when
+                second.StartsWith(Explanation)
+                && third.StartsWith(Translation)
+                && fourth.StartsWith(Example) => true,
+            
             _ => false,
         };
     }
