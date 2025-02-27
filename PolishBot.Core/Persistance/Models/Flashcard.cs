@@ -5,10 +5,15 @@ namespace PolishBot.Core.Persistance.Models;
 [Table("flashcards")]
 public class Flashcard
 {
+    [Column("id")]
     public int Id { get; init; }
+    [Column("word")]
     public string Word { get; init; }
+    [Column("explanation")]
     public string? Explanation { get; init; }
+    [Column("translation")]
     public string Translation { get; init; }
+    [Column("example")]
     public string? Example { get; init; }
 
     public Flashcard(string word, string explanation, string translation, string example)
