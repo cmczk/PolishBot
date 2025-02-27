@@ -24,4 +24,14 @@ public class Flashcard
         string.Empty,
         string.Empty,
         string.Empty);
+
+    public string FormatToSend()
+    {
+        return $"""
+                <b>Слово</b>: {Word}
+                <b>Объяснение</b>: {(Explanation == "" ? "\ud83d\udcc3" : Explanation)}
+                <b>Перевод</b>: {Translation}
+                <b>Пример</b>: {(Example == "" ? "\ud83d\udcc3" : Example)}
+                """;
+    }
 }
