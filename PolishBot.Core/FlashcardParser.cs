@@ -4,6 +4,11 @@ namespace PolishBot.Core;
 
 public static class FlashcardParser
 {
+    private const string Word = "Слово: ";
+    private const string Explanation = "Объяснение: ";
+    private const string Translation = "Перевод: ";
+    private const string Example = "Пример: ";
+    
     public static bool TryParse(string message, out Flashcard flashcard)
     {
         var lines = message.Split("\n");
@@ -14,33 +19,64 @@ public static class FlashcardParser
             return false;
         }
 
-        if (lines.Length == 2)
+        flashcard = lines.Length switch
         {
-            flashcard = new(word: lines[0], explanation: string.Empty, translation: lines[1], example: string.Empty);
-            return true;
-        }
-        else if (lines.Length == 3 && lines[1].StartsWith("Объяснение:"))
-        {
-            flashcard = new(word: lines[0], explanation: lines[1], translation: lines[2], example: string.Empty);
-            return true;
-        }
-        else if (lines.Length == 3 && lines[1].StartsWith("Перевод:"))
-        {
-            flashcard = new(word: lines[0], explanation: string.Empty, translation: lines[1], example: lines[2]);
-            return true;
-        }
-        else
-        {
-            flashcard = new(word: lines[0], explanation: lines[1], translation: lines[2], example: lines[3]);
-            return true;
-        }
+            2 => new Flashcard(
+                word: lines[0][Word.Length..], 
+                explanation: string.Empty,
+                translation: lines[1][Translation.Length..],
+                example: string.Empty),
+            
+            3 when lines[1].StartsWith(Explanation) => new Flashcard(
+                word: lines[0][Word.Length..],
+                explanation: lines[1][Explanation.Length..],
+                translation: lines[2][Translation.Length..],
+                example: string.Empty),
+            
+            3 when lines[1].StartsWith(Translation) => new Flashcard(
+                word: lines[0][Word.Length..],
+                explanation: string.Empty,
+                translation: lines[1][Translation.Length..],
+                example: lines[2][Example.Length..]),
+            
+            _ => new Flashcard(
+                word: lines[0][Word.Length..],
+                explanation: lines[1][Explanation.Length..],
+                translation: lines[2][Translation.Length..],
+                example: lines[3][Example.Length..]),
+        };
+
+        return true;
     }
 
     private static bool IsValid(string[] lines)
     {
-        return lines.Length == 2 && lines[0].StartsWith("Слово:") && lines[1].StartsWith("Перевод:")
-            || lines.Length == 3 && lines[0].StartsWith("Слово:") && lines[1].StartsWith("Объяснение:") && lines[2].StartsWith("Перевод:")
-            || lines.Length == 3 && lines[0].StartsWith("Слово:") && lines[1].StartsWith("Перевод:") && lines[2].StartsWith("Пример:")
-            || lines.Length == 4 && lines[0].StartsWith("Слово:") && lines[1].StartsWith("Объяснение:") && lines[2].StartsWith("Перевод:") && lines[3].StartsWith("Пример:");
+        return IsLengthValid(lines)
+               && StartsWithWord(lines)
+               && IsOrderValid(lines);
+    }
+
+    private static bool IsLengthValid(string[] lines)
+    {
+        return (lines.Length is >= 2 and <= 4);
+    }
+
+    private static bool StartsWithWord(string[] lines)
+    {
+        return lines[0].StartsWith(Word);
+    }
+
+    private static bool IsOrderValid(string[] lines)
+    {
+        return lines.Length switch
+        {
+            2 when lines[1].StartsWith(Translation) => true,
+            3 when lines[1].StartsWith(Explanation) && lines[2].StartsWith(Translation) => true,
+            3 when lines[1].StartsWith(Translation) && lines[2].StartsWith(Example) => true,
+            4 when lines[1].StartsWith(Explanation) 
+                   && lines[2].StartsWith(Translation)
+                   && lines[3].StartsWith(Example) => true,
+            _ => false,
+        };
     }
 }
