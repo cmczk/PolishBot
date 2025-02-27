@@ -18,4 +18,8 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PolishBot.Core\PolishBot.Core.csproj" />
+  </ItemGroup>
+
 </Project>
