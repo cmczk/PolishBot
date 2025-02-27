@@ -29,9 +29,9 @@ public class Flashcard
     {
         return $"""
                 <b>Слово</b>: {Word}
-                <b>Объяснение</b>: {(Explanation == "" ? "\ud83d\udcc3" : Explanation)}
+                <b>Объяснение</b>: {(Explanation == "" ? "\ud83d\udcc3" : $"<span class='tg-spoiler'>{Explanation}</span>")}
                 <b>Перевод</b>: {Translation}
-                <b>Пример</b>: {(Example == "" ? "\ud83d\udcc3" : Example)}
+                <b>Пример</b>: {(Example == "" ? "\ud83d\udcc3" : $"<span class='tg-spoiler'>{Example}</span>")}
                 """;
     }
 }
