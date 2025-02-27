@@ -5,11 +5,11 @@ namespace PolishBot.Core.Persistance.Models;
 [Table("flashcards")]
 public class Flashcard
 {
-    public int Id { get; set; }
-    public string Word { get; set; } = null!;
-    public string? Explanation { get; set; }
-    public string Translation { get; set; } = null!;
-    public string? Example { get; set; }
+    public int Id { get; init; }
+    public string Word { get; init; }
+    public string? Explanation { get; init; }
+    public string Translation { get; init; }
+    public string? Example { get; init; }
 
     public Flashcard(string word, string explanation, string translation, string example)
     {
@@ -20,8 +20,8 @@ public class Flashcard
     }
 
     public static Flashcard Default { get; } = new(
-        "Marzenie ściętej głowy",
-        "Coś nierealnego, niedostępnego dla kogoś", 
-        "Мечта отсечённой головы, нереалистичное желание или устремление",
-        "Chcesz się z nią ożenić? Marzenie ściętej głowy! Ona nigdy się nie zgodzi");
+        string.Empty,
+        string.Empty,
+        string.Empty,
+        string.Empty);
 }
