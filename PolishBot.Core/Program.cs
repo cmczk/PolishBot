@@ -19,7 +19,6 @@ var flashcardsRepository = new FlashcardsRepository(dbContext);
 bot.OnError += OnError;
 bot.OnMessage += OnMessage;
 
-
 Console.WriteLine($"@{me.Username} is running... Press Enter to terminate.");
 Console.ReadLine();
 
@@ -33,13 +32,19 @@ async Task OnError(Exception exception, HandleErrorSource source)
 
 async Task OnMessage(Message message, UpdateType type)
 {
-    if (message.Text is null) return;
+    if (string.IsNullOrWhiteSpace(message.Text)) return;
 
-    if (FlashcardParser.TryParse(message.Text, out var flashcard))
+    if (message.Text.Trim() == "/flashcard")
+    {
+        var randomFlashcard = await flashcardsRepository.GetRandomFlashCard();
+        await bot.SendMessage(chatId: message.Chat.Id, text: randomFlashcard.FormatToSend(), parseMode: ParseMode.Html);
+    }
+    else if (MessageToFlashcardParser.TryParse(message.Text, out var flashcard))
     {
         await flashcardsRepository.AddFlashcard(flashcard);
-        await bot.SendMessage(message.Chat, "Я сохранил новую карточку!");
+        await bot.SendMessage(message.Chat, "Я сохранил новую карточку! Вот она:");
         await bot.DeleteMessage(message.Chat, message.Id);
+        await bot.SendMessage(chatId: message.Chat, text: flashcard.FormatToSend(), parseMode: ParseMode.Html);
     }
     else
     {
