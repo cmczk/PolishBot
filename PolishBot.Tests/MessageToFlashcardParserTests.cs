@@ -4,7 +4,7 @@ using Xunit.Abstractions;
 
 namespace PolishBot.Tests;
 
-public class FlashcardParserTests
+public class MessageToFlashcardParserTests
 {
     [Theory]
     [InlineData(
@@ -85,7 +85,7 @@ public class FlashcardParserTests
         string expectedTranslation,
         string expectedExample)
     {
-        var wasParsed = FlashcardParser.TryParse(message, out var flashcard);
+        var wasParsed = MessageToFlashcardParser.TryParse(message, out var flashcard);
 
         Assert.Equal(expectedResult, wasParsed);
         

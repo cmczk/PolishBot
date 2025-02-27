@@ -2,7 +2,7 @@
 
 namespace PolishBot.Core;
 
-public static class FlashcardParser
+public static class MessageToFlashcardParser
 {
     private const string Word = "Слово: ";
     private const string Explanation = "Объяснение: ";
