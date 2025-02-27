@@ -35,7 +35,7 @@ public class Flashcard
         return $"""
                 <b>Слово</b>: {Word}
                 <b>Объяснение</b>: {(Explanation == "" ? "\ud83d\udcc3" : $"<span class='tg-spoiler'>{Explanation}</span>")}
-                <b>Перевод</b>: {Translation}
+                <b>Перевод</b>: {$"<span class='tg-spoiler'>{Translation}</span>"}
                 <b>Пример</b>: {(Example == "" ? "\ud83d\udcc3" : $"<span class='tg-spoiler'>{Example}</span>")}
                 """;
     }
