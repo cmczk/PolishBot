@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PolishBot.Core.Migrations
 {
     [DbContext(typeof(PolishBotDbContext))]
-    [Migration("20250226204652_InitialCreate")]
+    [Migration("20250227132041_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -22,21 +22,32 @@ namespace PolishBot.Core.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("id");
 
                     b.Property<string>("Example")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("example");
 
                     b.Property<string>("Explanation")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("explanation");
 
                     b.Property<string>("Translation")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("translation");
 
                     b.Property<string>("Word")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("word");
 
                     b.HasKey("Id");
 

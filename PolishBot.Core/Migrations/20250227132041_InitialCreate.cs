@@ -14,16 +14,16 @@ namespace PolishBot.Core.Migrations
                 name: "flashcards",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Word = table.Column<string>(type: "TEXT", nullable: false),
-                    Explanation = table.Column<string>(type: "TEXT", nullable: true),
-                    Translation = table.Column<string>(type: "TEXT", nullable: false),
-                    Example = table.Column<string>(type: "TEXT", nullable: true)
+                    word = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    explanation = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    translation = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    example = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_flashcards", x => x.Id);
+                    table.PrimaryKey("PK_flashcards", x => x.id);
                 });
         }
 
