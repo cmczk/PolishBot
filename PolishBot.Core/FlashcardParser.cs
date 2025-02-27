@@ -45,14 +45,15 @@ public static class FlashcardParser
                 translation: lines[2][Translation.Length..],
                 example: lines[3][Example.Length..]),
         };
-        
-        return Flashcard.IsValid(flashcard);
+
+        return true;
     }
 
     private static bool IsValid(string[] lines)
     {
         return IsLengthValid(lines)
                && StartsWithWord(lines)
+               && !IsWordOrTranslationEmptyOrWhiteSpace(lines)
                && IsOrderValid(lines);
     }
 
@@ -64,6 +65,13 @@ public static class FlashcardParser
     private static bool StartsWithWord(string[] lines)
     {
         return lines[0].StartsWith(Word);
+    }
+
+    private static bool IsWordOrTranslationEmptyOrWhiteSpace(string[] lines)
+    {
+        return lines.Any(line => 
+            (line.StartsWith(Word) && string.IsNullOrWhiteSpace(line[Word.Length..])) 
+            || (line.StartsWith(Translation) && string.IsNullOrWhiteSpace(line[Translation.Length..])));
     }
 
     private static bool IsOrderValid(string[] lines)

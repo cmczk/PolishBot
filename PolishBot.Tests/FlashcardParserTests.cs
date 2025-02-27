@@ -1,5 +1,6 @@
 ﻿using PolishBot.Core;
 using PolishBot.Core.Persistance.Models;
+using Xunit.Abstractions;
 
 namespace PolishBot.Tests;
 
@@ -64,6 +65,13 @@ public class FlashcardParserTests
         "")]
     [InlineData(
         "Слово: relacja\nПеревод: отношение; маршрут\nОбъяснение: zależność między dwoma bądź większą liczbą elementów\nПример: ostatni pociąg relacji Wrocław - Warszawa odjeżdża przed północą",
+        false,
+        "",
+        "",
+        "",
+        "")]
+    [InlineData(
+        "Слово: \nОбъяснение: zależność między dwoma bądź większą liczbą elementów\nПеревод: отношение; маршрут\nПример: ostatni pociąg relacji Wrocław - Warszawa odjeżdża przed północą",
         false,
         "",
         "",

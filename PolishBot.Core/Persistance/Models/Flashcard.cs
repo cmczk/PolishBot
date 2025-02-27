@@ -19,12 +19,6 @@ public class Flashcard
         Example = example;
     }
 
-    public static bool IsValid(Flashcard flashcard)
-    {
-        return !string.IsNullOrWhiteSpace(flashcard.Word)
-               && !string.IsNullOrWhiteSpace(flashcard.Translation);
-    }
-
     public static Flashcard Default { get; } = new(
         string.Empty,
         string.Empty,
