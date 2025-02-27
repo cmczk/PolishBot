@@ -1,6 +1,5 @@
 ﻿using PolishBot.Core;
 using PolishBot.Core.Persistance.Models;
-using Xunit.Abstractions;
 
 namespace PolishBot.Tests;
 
