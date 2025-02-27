@@ -7,10 +7,12 @@ public class FlashcardsRepository(PolishBotDbContext context)
 {
     private readonly PolishBotDbContext _context = context;
 
-    public async Task AddFlashcard(Flashcard flashcard)
+    public async Task<Flashcard> AddFlashcard(Flashcard flashcard)
     {
         await _context.Flashcards.AddAsync(flashcard);
         await _context.SaveChangesAsync();
+
+        return flashcard;
     }
 
     public async Task<Flashcard> GetRandomFlashCard()
