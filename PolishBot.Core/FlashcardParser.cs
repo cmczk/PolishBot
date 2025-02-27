@@ -45,8 +45,8 @@ public static class FlashcardParser
                 translation: lines[2][Translation.Length..],
                 example: lines[3][Example.Length..]),
         };
-
-        return true;
+        
+        return Flashcard.IsValid(flashcard);
     }
 
     private static bool IsValid(string[] lines)
