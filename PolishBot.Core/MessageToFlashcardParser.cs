@@ -8,7 +8,7 @@ public static class MessageToFlashcardParser
     private const string Explanation = "Объяснение: ";
     private const string Translation = "Перевод: ";
     private const string Example = "Пример: ";
-    
+
     public static bool TryParse(string message, out Flashcard flashcard)
     {
         var lines = message.Split("\n");
@@ -51,50 +51,42 @@ public static class MessageToFlashcardParser
         return true;
     }
 
-    private static bool IsValid(string[] lines)
-    {
-        return IsLengthValid(lines)
-               && StartsWithWord(lines)
-               && !IsWordOrTranslationEmptyOrWhiteSpace(lines)
-               && IsOrderValid(lines);
-    }
+    private static bool IsValid(string[] lines) =>
+        IsLengthValid(lines)
+        && StartsWithWord(lines)
+        && !IsWordOrTranslationEmptyOrWhiteSpace(lines)
+        && IsOrderValid(lines);
 
-    private static bool IsLengthValid(string[] lines)
-    {
-        return (lines.Length is >= 2 and <= 4);
-    }
+    private static bool IsLengthValid(string[] lines) =>
+        lines.Length is >= 2 and <= 4;
 
-    private static bool StartsWithWord(string[] lines)
-    {
-        return lines[0].StartsWith(Word);
-    }
+    private static bool StartsWithWord(string[] lines) =>
+        lines[0].StartsWith(Word);
 
-    private static bool IsWordOrTranslationEmptyOrWhiteSpace(string[] lines)
-    {
-        return lines.Any(line => 
-            (line.StartsWith(Word) && string.IsNullOrWhiteSpace(line[Word.Length..])) 
+    private static bool IsWordOrTranslationEmptyOrWhiteSpace(string[] lines) =>
+        lines.Any(line =>
+            (line.StartsWith(Word) && string.IsNullOrWhiteSpace(line[Word.Length..]))
             || (line.StartsWith(Translation) && string.IsNullOrWhiteSpace(line[Translation.Length..])));
-    }
 
     private static bool IsOrderValid(string[] lines)
     {
         return lines switch
         {
-            [var first, var second] when second.StartsWith(Translation) => true,
-            
-            [var first, var second, var third] when
+            [var _, var second] when second.StartsWith(Translation) => true,
+
+            [var _, var second, var third] when
                 second.StartsWith(Explanation)
                 && third.StartsWith(Translation) => true,
-            
-            [var first, var second, var third] when
+
+            [var _, var second, var third] when
                 second.StartsWith(Translation)
                 && third.StartsWith(Example) => true,
-            
-            [var first, var second, var third, var fourth] when
+
+            [var _, var second, var third, var fourth] when
                 second.StartsWith(Explanation)
                 && third.StartsWith(Translation)
                 && fourth.StartsWith(Example) => true,
-            
+
             _ => false,
         };
     }
